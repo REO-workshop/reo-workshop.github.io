@@ -240,11 +240,13 @@ const metadata = {
       <div class="mt-6 rounded-lg border border-slate-200 dark:border-slate-700 p-6 bg-white dark:bg-slate-900">
         <details class="group">
           <summary class="cursor-pointer flex items-center justify-between">
-            <h3 class="text-xl font-bold">Formatting Instructions</h3>
+            <h3 class="text-xl font-bold">Submission Details</h3>
             <span class="text-sm text-muted group-open:hidden">Show</span>
             <span class="text-sm text-muted hidden group-open:inline">Hide</span>
           </summary>
-          <p class="text-muted mt-4">
+
+          <h4 class="font-semibold mt-6 mb-2">Formatting</h4>
+          <p class="text-muted">
             Submissions must follow the
             <a href="https://neurips.cc/Conferences/2026/CallForPapers" class="text-primary underline">NeurIPS formatting guidelines</a>,
             with the exception of the page limit: up to <strong>4 pages</strong> for the Research Track
@@ -279,6 +281,47 @@ const metadata = {
               <s><code class="text-sm">{'\\input{checklist.tex}'}</code></s>
             </li>
           </ul>
+
+          <h4 class="font-semibold mt-6 mb-2">Anonymity</h4>
+          <p class="text-muted">
+            Research Track submissions are reviewed <strong>double-blind</strong>: remove author
+            names, affiliations, acknowledgements, and any identifying links or metadata from the
+            PDF. Non-anonymized submissions risk a desk rejection. Highlights Track submissions
+            are reviewed <strong>single-blind</strong> and need not be anonymized.
+          </p>
+
+          <h4 class="font-semibold mt-6 mb-2">Dual Submissions</h4>
+          <p class="text-muted">
+            REO-2 is non-archival, so concurrent submission to archival venues is permitted from our side, in
+            line with the
+            <a href="https://neurips.cc/Conferences/2026/MainTrackHandbook" class="text-primary underline">NeurIPS 2026 dual submission policy</a>.
+            Please do not submit the same work to multiple NeurIPS 2026 workshops.
+            Upon request, we do not publish accepted papers online if this would
+            hinder a submission to an archival venue.
+          </p>
+
+          <h4 class="font-semibold mt-6 mb-2">Use of LLMs</h4>
+          <p class="text-muted">
+            We follow the
+            <a href="https://neurips.cc/Conferences/2026/MainTrackHandbook" class="text-primary underline">NeurIPS 2026 LLM policy</a>.
+            Disclose LLM or agent use where it is an important, original, or non-standard component
+            of the approach; routine editing and basic code assistance need not be disclosed. LLMs
+            cannot be authors, and authors remain fully responsible for the correctness and
+            originality of their submission, including all citations.
+          </p>
+
+          <h4 class="font-semibold mt-6 mb-2">Registration &amp; Code of Conduct</h4>
+          <p class="text-muted">
+            Presentation is in person, so at least one author of each accepted paper needs to attend the workshop in Paris. 
+            All participants are bound by the
+            <a href="https://neurips.cc/public/CodeOfConduct" class="text-primary underline">NeurIPS Code of Conduct</a>.
+          </p>
+
+          <h4 class="font-semibold mt-6 mb-2">Volunteer Reviewers</h4>
+          <p class="text-muted">
+            We welcome volunteer reviewers. If you would like to review for REO-2, please email
+            <a href="mailto:loic.landrieu@enpc.fr" class="text-primary underline">loic.landrieu@enpc.fr</a>.
+          </p>
         </details>
       </div>
 
