@@ -249,8 +249,9 @@ const metadata = {
             <a href="https://neurips.cc/Conferences/2026/CallForPapers" class="text-primary underline">NeurIPS formatting guidelines</a>,
             with the exception of the page limit: up to <strong>4 pages</strong> for the Research Track
             and up to <strong>1 page</strong> for the Highlights Track summary (references and appendices
-            excluded). Please use the offical
+            excluded). The checklist is not required for any track. Please use the official
             <a href="https://www.overleaf.com/latex/templates/formatting-instructions-for-neurips-2026/bjdwqfdkyftc" class="text-primary underline">NeurIPS LaTeX template</a>.
+            Submissions not following the official template risk a desk rejection.
           </p>
           <p class="text-muted mt-4">
             When using the template, please adjust the following:
@@ -271,6 +272,11 @@ const metadata = {
             <li>
               For the camera-ready paper, uncomment the final option, e.g.<br/>
               <code class="text-sm">{'\\usepackage[dblblindworkshop, final]{neurips_2026}'}</code>
+            </li>
+            <li>
+              Remove the checklist for any submission:<br />              
+              <s><code class="text-sm">{'\\newpage'}</code></s><br />
+              <s><code class="text-sm">{'\\input{checklist.tex}'}</code></s>
             </li>
           </ul>
         </details>
