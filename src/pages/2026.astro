@@ -8,6 +8,7 @@ import Image from '~/components/common/Image.astro';
 import parisS2 from '~/assets/images/paris_s2.jpg';
 import hiParisLogo from '~/assets/images/logos/Hi-Paris-HEC-Polytechnique.jpg';
 import thinkingEarthLogo from '~/assets/images/logos/ThinkingEarth_Logo.png';
+import esaLogo from '~/assets/images/logos/ESA_logo_White_2020.png';
 import lealtaixeImg from '~/assets/images/speakers/lealtaixe.jpg';
 import carvalhaisImg from '~/assets/images/speakers/carvalhais.png';
 import campbellImg from '~/assets/images/speakers/campbell.png';
@@ -462,7 +463,7 @@ const metadata = {
         <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tighter">Sponsors</h2>
       </div>
 
-      <div class="grid max-w-4xl mx-auto gap-8 sm:grid-cols-2">
+      <div class="grid max-w-4xl mx-auto gap-8 sm:grid-cols-2 lg:grid-cols-3">
         <div class="flex w-full max-w-md items-center justify-center rounded-lg bg-white p-6 dark:bg-white">
           <Image
             src={hiParisLogo}
@@ -478,6 +479,15 @@ const metadata = {
           <Image
             src={thinkingEarthLogo}
             alt="ThinkingEarth"
+            widths={[400, 800]}
+            sizes="(max-width: 640px) calc(100vw - 80px), 400px"
+            class="w-full h-auto"
+          />
+        </div>
+        <div class="flex w-full max-w-md items-center justify-center rounded-lg bg-slate-900 p-6">
+          <Image
+            src={esaLogo}
+            alt="European Space Agency"
             widths={[400, 800]}
             sizes="(max-width: 640px) calc(100vw - 80px), 400px"
             class="w-full h-auto"
