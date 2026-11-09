@@ -81,20 +81,73 @@ const organizers = [
 ];
 
 const programCommittee = [
-  'Begüm Demir (TU Berlin/BIFOLD)',
-  'Jocelyn Chanussot (INRIA)',
-  'Charlotte Pelletier (UBS Vannes)',
-  'Dino Ienco (INRAE)',
-  'Ronny Hänsch (DLR)',
-  'Behnood Rasti (BIFOLD/TU Berlin)',
-  'Gencer Sumbul (EPFL)',
-  'Ribana Roscher (U. Bonn)',
-  'Mikolaj Czerkawski (Asterisk Labs)',
-  'Nicolas Longépé (ESA)',
-  'Johannes Jakubik (IBM)',
-  'Franziska Gerken (NVIDIA)',
-  'Valerio Marsocci (ESA)',
+  'Arthur Ouaknine',
+  'Benedikt Blumenstiel',
+  'Caleb Robinson',
+  'Charlotte Pelletier',
+  'Clément Mallet',
+  'Damien Robert',
+  'Devis Tuia',
+  'Dimitri Gominski',
+  'Dimitrios Michail',
+  'Dino Ienco',
+  'Diogenis Antonopoulos',
+  'Dionysis Christopoulos',
+  'Elouan Gardes',
+  'Gatien Chenu',
+  'Georgios Athanasiou',
+  'Ghjulia Sialelli',
+  'Gilberto Goracci',
+  'Guillaume Astruc',
+  'Ioannis Kakogeorgiou',
+  'Ioannis Prapas',
+  'Isaac Corley',
+  'Isabelle Wittmann',
+  'Ivica Obadic',
+  'Johannes Jakubik',
+  'Julia Leonardi',
+  'Linus Ericsson',
+  'Linus Scheibenreif',
+  'Loïc Landrieu',
+  'Lorenzo Papa',
+  'Marta López Rauhut',
+  'Miguel Espinosa',
+  'Mikolaj Czerkawski',
+  'Moritz Lucas',
+  'Nicolas Audebert',
+  'Nicolas Houdré',
+  'Nicolas Longépé',
+  'Nikolaos Ioannis Bountos',
+  'Nikolaos Tziolas',
+  'Nikolas Papadopoulos',
+  'Nils Lehmann',
+  'Olivier Dietrich',
+  'Paul Borne Pons',
+  'Qingsong Xu',
+  'Rocco Sedona',
+  'Ruben Cartuyvels',
+  'Sander Jyhne',
+  'Sébastien Lefèvre',
+  'Spyros Kondylatos',
+  'Stella Girtsou',
+  'Sylvain Lobry',
+  'Tristan Quétin',
+  'Valerio Marsocci',
+  'Vasileios Psomas',
+  'Vasileios Sitokonstantinou',
+  'Venkanna Babu Guthula',
+  'Victor Sanchez',
+  'Vishal Nedungadi',
+  'Wei Huang',
+  'Weijie Zhang',
+  'Xizhe Xue',
+  'Yang Mu',
+  'Yohann Perron',
+  'Zhanyu Ma',
 ];
+
+// Fill in after camera-ready: { id, title, authors, paper?, poster? }
+const acceptedPapers: { id: number; title: string; authors?: string; paper?: string; poster?: string }[] = [];
 
 const metadata = {
   title: 'REO-2 — 2nd Workshop on Advances in Representation Learning for Earth Observation',
@@ -106,7 +159,7 @@ const metadata = {
   <Hero
     tagline='<span class="text-blue-300 dark:text-blue-300">NeurIPS 2026 · Paris, France · Saturday, Dec 12</span>'
     actions={[
-      { variant: 'primary', text: 'Call for Papers', href: '#call-for-papers' },
+      { variant: 'primary', text: 'Accepted Papers', href: '#papers' },
       {
         variant: 'secondary',
         text: 'Speakers',
@@ -320,23 +373,14 @@ const metadata = {
             All participants are bound by the
             <a href="https://neurips.cc/public/CodeOfConduct" class="text-primary underline">NeurIPS Code of Conduct</a>.
           </p>
-
-          <h4 class="font-semibold mt-6 mb-2">Volunteer Reviewers</h4>
-          <p class="text-muted">
-            We welcome volunteer reviewers. If you would like to review for REO-2, please email
-            <a href="mailto:loic.landrieu@enpc.fr" class="text-primary underline">loic.landrieu@enpc.fr</a>.
-          </p>
         </details>
       </div>
 
 
       <div class="mt-10 flex justify-center">
-        <a
-          href="https://cmt3.research.microsoft.com/REO2026"
-          class="btn-primary py-3 px-8 font-semibold text-base"
-        >
-          Submission
-        </a>
+        <p class="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 py-3 px-8 font-semibold text-base text-muted">
+          Submissions are closed
+        </p>
       </div>
 
       <div class="mt-10">
@@ -363,13 +407,13 @@ const metadata = {
                 <td class="py-3 pr-4">Camera-ready</td><td class="py-3">Oct 14, 2026</td>
               </tr>
               <tr>
-                <td class="py-3 pr-4">Workshop day</td><td class="py-3">Dec 12, 2026 — Sorbonne University (Jussieu), Paris</td>
+                <td class="py-3 pr-4">Workshop day</td><td class="py-3">Dec 12, 2026 — Palais des Congrès, Paris</td>
               </tr>
             </tbody>
           </table>
         </div>
         <p class="text-sm text-muted mt-4">
-          In-person presentation is required. The best papers will be selected for oral presentations.
+          In-person presentation is expected. The best papers will be selected for oral presentations.
         </p>
       </div>
     </div>
@@ -457,6 +501,43 @@ const metadata = {
     </div>
   </section>
 
+  <!-- Accepted Papers -->
+  <section id="papers" class="scroll-mt-16 py-16 md:py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="mb-10 md:mb-12 text-center">
+        <p class="text-base text-secondary dark:text-blue-200 font-semibold tracking-wide uppercase">Program</p>
+        <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tighter mt-2">Accepted Papers</h2>
+        {acceptedPapers.length === 0 && (
+          <p class="max-w-3xl mx-auto mt-4 text-xl text-muted">The list of accepted papers will be added shortly.</p>
+        )}
+      </div>
+
+      <ul class="space-y-2">
+        {acceptedPapers.map((p) => (
+          <li class="flex items-start gap-4 rounded-md bg-white dark:bg-slate-900 p-4 border border-slate-200 dark:border-slate-700">
+            <span class="font-mono text-sm text-primary dark:text-blue-300 whitespace-nowrap pt-0.5 min-w-[2.5rem]">#{p.id}</span>
+            <div class="flex-1">
+              <p class="text-base font-medium">{p.title}</p>
+              {p.authors && <p class="text-sm text-muted mt-0.5">{p.authors}</p>}
+              <div class="flex flex-wrap gap-2 mt-2">
+                {[['Paper', p.paper], ['Poster', p.poster]].filter(([, href]) => href).map(([label, href]) => (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener"
+                    class="text-xs px-2 py-1 rounded bg-blue-50 hover:bg-blue-100 text-primary dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-blue-300 border border-blue-100 dark:border-slate-700"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <!-- Sponsors -->
   <section id="sponsors" class="scroll-mt-16 py-16 md:py-20">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
@@ -469,7 +550,7 @@ const metadata = {
           href="https://hi-paris.fr/"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex w-full max-w-md items-center justify-center rounded-lg bg-white p-6 dark:bg-white"
+          class="flex w-full max-w-md items-center justify-center rounded-lg border border-blue-200 bg-white p-6 dark:border-blue-300 dark:bg-white"
         >
           <Image
             src={hiParisLogo}
@@ -485,7 +566,7 @@ const metadata = {
           href="https://thinking-earth.eu/"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex w-full max-w-md items-center justify-center overflow-hidden rounded-lg bg-slate-900 p-6"
+          class="flex w-full max-w-md items-center justify-center overflow-hidden rounded-lg border border-blue-200 bg-white p-6 dark:border-blue-300 dark:bg-white"
         >
           <Image
             src={thinkingEarthLogo}
@@ -543,7 +624,6 @@ const metadata = {
         ))}
       </div>
 
-      {/* Program committee: hidden until after review process
       <div class="mt-10">
         <details class="group rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5">
           <summary class="cursor-pointer font-semibold flex items-center justify-between">
@@ -551,29 +631,14 @@ const metadata = {
             <span class="text-sm text-muted group-open:hidden">Show</span>
             <span class="text-sm text-muted hidden group-open:inline">Hide</span>
           </summary>
-
           <p class="text-sm text-muted mt-4">
-            We are grateful to our Program Committee for their time and expertise
-            in reviewing submissions to REO-2. Thank you.
+            Thank you to our reviewers for their time and expertise in reviewing submissions to REO-2.
           </p>
-
-          <h4 class="font-semibold mt-6 mb-2">Expert Reviewers</h4>
-          <ul class="grid sm:grid-cols-2 gap-1 text-sm text-muted">
+          <ul class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-1 text-sm text-muted">
             {programCommittee.map((pc) => <li>· <span class="text-gray-900 dark:text-gray-100 font-medium">{pc}</span></li>)}
-          </ul>
-
-          <h4 class="font-semibold mt-6 mb-2">Reviewers</h4>
-          <ul class="grid sm:grid-cols-2 gap-1 text-sm text-muted">
-            <li>· <span class="italic">Reviewer name — TBD</span></li>
-            <li>· <span class="italic">Reviewer name — TBD</span></li>
-            <li>· <span class="italic">Reviewer name — TBD</span></li>
-            <li>· <span class="italic">Reviewer name — TBD</span></li>
-            <li>· <span class="italic">Reviewer name — TBD</span></li>
-            <li>· <span class="italic">Reviewer name — TBD</span></li>
           </ul>
         </details>
       </div>
-      */}
 
       <!-- Contact -->
       <div class="mt-12 text-center">

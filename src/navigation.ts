@@ -5,17 +5,12 @@ export const headerData = {
     { text: 'Call for Papers', href: getPermalink('/2026#call-for-papers') },
     { text: 'Speakers', href: getPermalink('/2026#speakers') },
     { text: 'Schedule', href: getPermalink('/2026#schedule') },
+    { text: 'Papers', href: getPermalink('/2026#papers') },
     { text: 'Sponsors', href: getPermalink('/2026#sponsors') },
     { text: 'Organizers', href: getPermalink('/2026#organizers') },
     { text: '2025 edition', href: getPermalink('/2025') },
   ],
-  actions: [
-    {
-      text: 'Submit',
-      href: 'https://cmt3.research.microsoft.com/REO2026',
-      variant: 'primary',
-    },
-  ],
+  actions: [],
 };
 
 export const footerData = {
