@@ -149,7 +149,7 @@ const programCommittee = [
 // From the NeurIPS workshop page (id = neurips.cc/virtual/2026/<id>), extracted via .claude/code/extract_neurips_papers.py
 const neuripsWorkshopUrl = 'https://neurips.cc/virtual/2026/loc/paris/workshop/137637';
 const acceptedPapers = [
-  { title: "Subimage Overlap Prediction: Task-Aligned Self-Supervised Pretraining For Semantic Segmentation In Remote Sensing Imagery", authors: "Lakshay Sharma, Alex Marin", id: 157078 },
+  { title: "Subimage Overlap Prediction: Task-Aligned Self-Supervised Pretraining For Semantic Segmentation In Remote Sensing Imagery", authors: "Lakshay Sharma, Alex Marin", id: 157078, highlight: true, paper: "https://openaccess.thecvf.com/content/WACV2026W/CV4EO/html/Sharma_Subimage_Overlap_Prediction_Task-Aligned_Self-Supervised_Pretraining_For_Semantic_Segmentation_In_WACVW_2026_paper.html" },
   { title: "Above-ground Biomass Estimation with Geospatial Foundation Models", authors: "Ghjulia Sialelli, Linus Scheibenreif, Jan Wegner, Konrad Schindler", id: 157079 },
   { title: "LiS2Forest: a multi-modal and multi-temporal dataset for benchmarking operational forest analysis", authors: "Emilie Vautier, Clement Mallet, Cédric Vega", id: 157080 },
   { title: "Role of Auxiliary Variables as Inputs or Targets in Spatial Generalization of Satellite Image Time Series Foundation Models", authors: "Sarah Brood, Iris Dumeur, Jérémy Anger, Aurélien de Truchis, Philippe Ciais, Alexandre d'Aspremont", id: 157081 },
@@ -159,8 +159,8 @@ const acceptedPapers = [
   { title: "BioCongo: A Multimodal Dataset for Studying 3D Forest Structure in the Congo Basin", authors: "Sayan Mandal, Rocco Sedona, Simon Besnard, Mikhail Urbazaev, Martin Herold, Morris Riedel, Gabriele Cavallaro", id: 157085 },
   { title: "Ground-to-Satellite Knowledge Distillation for Crop Classification under Temporal and Geographic Shift", authors: "Miro Miranda, Rocco Sedona, Valerio Marsocci, Gabriele Cavallaro, Claudia Paris", id: 157086 },
   { title: "Lightweight Probabilistic Downscaling from a Deterministic Base Model", authors: "Joseph McLean, Tiffany Vlaar, Sigrid Passano Hellan, Linus Ericsson", id: 157087 },
-  { title: "RAMEN: Resolution-Adjustable Multimodal Encoder for Earth Observation", authors: "Nicolas Houdré", id: 157088 },
-  { title: "MIAM: Modality Imbalance-Aware Masking for Multimodal Ecological Applications", authors: "Robin Zbinden, Wesley Monteith-Finas, Gencer Sumbul, Nina Van Tiel, Chiara Vanalli, Devis Tuia", id: 157089 },
+  { title: "RAMEN: Resolution-Adjustable Multimodal Encoder for Earth Observation", authors: "Nicolas Houdré", id: 157088, highlight: true, paper: "https://openaccess.thecvf.com/content/CVPR2026/html/Houdre_RAMEN_Resolution-Adjustable_Multimodal_Encoder_for_Earth_Observation_CVPR_2026_paper.html" },
+  { title: "MIAM: Modality Imbalance-Aware Masking for Multimodal Ecological Applications", authors: "Robin Zbinden, Wesley Monteith-Finas, Gencer Sumbul, Nina Van Tiel, Chiara Vanalli, Devis Tuia", id: 157089, highlight: true, paper: "https://openreview.net/forum?id=oljjAkgZN4" },
   { title: "Crossfire: Privileged Cross-Modal Representation Learning for SAR-Only Wildfire Mapping", authors: "Xuran Hu, Yifang Ban", id: 157090 },
   { title: "GeoRefusalBench: A Diagnostic Refusal Benchmark for Remote Sensing Vision-Language Models", authors: "Yuqiu Li, Jian Xue, Hao Wu, Ke Lv", id: 157091 },
   { title: "GNN-VIEW: Visual Inspection and Explanation of Graph-based Earth-System Models", authors: "Alessandro Lucatelli, Ferdinand Unterhuber, Katharina Krenzer, Menna El-Assady, Benedikt Soja, Christina Humer, Joel Oskarsson", id: 157092 },
@@ -171,8 +171,8 @@ const acceptedPapers = [
   { title: "Ionospheric Forecasts Across Geomagnetic Conditions: Comparing Vision, Graph, and Recurrent Models", authors: "Linnea Wolniewicz, Umaa Rebbapragada, Ryan McGranahan, Olga Verkhoglyadova, Daniel Crichton, Madhulika Guhathakurta, Peter Sadowski", id: 157098 },
   { title: "What or Where? Class–Site Geometry and Geographic Transfer in Geospatial Embeddings", authors: "Kristie Hu, Jovana Knezevic, Peiwen Zhang, Shunde Yin, Jonathan Jun Li, Kyle Gao", id: 157099 },
   { title: "Predicting Marine Biogeochemistry from Structured Representational Priors", authors: "Gabriela Martinez Balbontin, Anastase Charantonis, Dominique Bereziat, Stefano Ciavatta", id: 157100 },
-  { title: "Counting Trees from Satellite Imagery with Noisy Supervision", authors: "Dimitri Gominski", id: 157101 },
-  { title: "Conformal Prediction for Long Tailed Classification", authors: "Jean-Baptiste Fermanian", id: 157102 },
+  { title: "Counting Trees from Satellite Imagery with Noisy Supervision", authors: "Dimitri Gominski", id: 157101, highlight: true, paper: "https://eccv.ecva.net/virtual/2026/poster/3817" },
+  { title: "Conformal Prediction for Long Tailed Classification", authors: "Jean-Baptiste Fermanian", id: 157102, highlight: true, paper: "https://proceedings.iclr.cc/paper_files/paper/2026/hash/855b928e3f64498da7d98a3996bd4971-Abstract-Conference.html" },
   { title: "When Wind Alignment Reveals Spatial Structure: A Falsification Study of Airport-Associated NO2 Observability at Gimpo and Jeju, South Korea", authors: "Myungseok Lee", id: 157103 },
   { title: "Learning Gaussian Embeddings from Temporal Views of Satellite Image Time Series", authors: "Giovanni Castiglioni, Javiera Castillo-Navarro, Sebastien Lefevre, Valentin Barriere", id: 157104 },
   { title: "EarthEmbeddingExplorer: A Web Application for Cross-Modal Retrieval of Global Satellite Images", authors: "Konstantin Klemmer, Yijie Zheng, Zhuoyao He, Weijie Wu", id: 157105 },
@@ -571,16 +571,16 @@ const metadata = {
         <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {acceptedPapers.toSorted((a, b) => Number(!!b.oral) - Number(!!a.oral)).map((p, i) => (
             <li class={i >= 9 ? 'hidden group-has-[:checked]:block' : ''}>
-              <a
-                href={`https://neurips.cc/virtual/2026/${p.id}`}
-                target="_blank"
-                rel="noopener"
-                class="block h-full rounded-md bg-white dark:bg-slate-900 p-4 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-blue-300 transition-colors"
-              >
-                {p.oral && <span class="inline-block mb-1.5 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded bg-primary text-white">Oral</span>}
-                <p class="text-sm font-medium line-clamp-3">{p.title}</p>
+              <!-- Title link is stretched over the card; the "Paper" link sits above it -->
+              <div class="relative h-full rounded-md bg-white dark:bg-slate-900 p-4 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-blue-300 transition-colors">
+                <div class="flex flex-wrap gap-1 mb-1.5 empty:hidden text-[10px] font-semibold uppercase tracking-wide">
+                  {p.oral && <span class="px-1.5 py-0.5 rounded bg-primary text-white">Oral</span>}
+                  {p.highlight && <span class="px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200">Highlights Track</span>}
+                  {p.paper && <a href={p.paper} target="_blank" rel="noopener" class="relative z-10 px-1.5 py-0.5 rounded bg-sky-100 text-sky-800 hover:bg-sky-200 dark:bg-sky-900/60 dark:text-sky-200 dark:hover:bg-sky-800 transition-colors">Paper</a>}
+                </div>
+                <a href={`https://neurips.cc/virtual/2026/${p.id}`} target="_blank" rel="noopener" class="block text-sm font-medium line-clamp-3 after:absolute after:inset-0">{p.title}</a>
                 <p class="text-xs text-muted mt-1 line-clamp-2">{p.authors}</p>
-              </a>
+              </div>
             </li>
           ))}
         </ul>
