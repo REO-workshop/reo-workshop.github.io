@@ -183,10 +183,10 @@ const acceptedPapers = [
   { title: "Calibrating Score Banks for Earth-Observation Anomaly Detection: Multiplicity, Tail Shape, and Power", authors: "Michaela Areti Zervou, Grigorios Tsagkatakis, Panagiotis Tsakalides", id: 157110 },
   { title: "What's in an Earth Embedding? Probing Geospatial Foundation Models Beyond Benchmarks", authors: "Vassiliki Mancoridis, Hannah Grauer", id: 157111 },
   { title: "On the Transferability of Earth Observation Foundation Models to Coastal Environments", authors: "Spyros Kondylatos, Nicklas Thorlund Simonsen", id: 157112 },
-  { title: "Every Fixed Metric Has a Blind Spot: A Learned Atmospheric Critic for Scoring Forecast Realism", authors: "Younes Elberkennou, Dmitri Demler, Thierry Meier, Luca Rispoli, Fanny Lehmann, Joel Oskarsson", id: 157113 },
+  { title: "Every Fixed Metric Has a Blind Spot: A Learned Atmospheric Critic for Scoring Forecast Realism", authors: "Younes Elberkennou, Dmitri Demler, Thierry Meier, Luca Rispoli, Fanny Lehmann, Joel Oskarsson", id: 157113, oral: true },
   { title: "SARLAND: When Spatial Detail Matters in Very-High-Resolution SAR", authors: "Malo de Pastor, Kaushik Pillalamarri, Valerio Marsocci", id: 157114 },
   { title: "Landfill Pulse: A Coarse-to-Fine GeoFM Framework for Spatiotemporal Landfill Mapping", authors: "Steffen Knoblauch, Ram Kumar Muthusamy, Alexander Zipf", id: 157115 },
-  { title: "torchgeo-bench: An Evaluation Harness for Geospatial Foundation Models", authors: "Isaac Corley, Nils Lehmann, Caleb Robinson, Hannah Kerner", id: 157116 },
+  { title: "torchgeo-bench: An Evaluation Harness for Geospatial Foundation Models", authors: "Isaac Corley, Nils Lehmann, Caleb Robinson, Hannah Kerner", id: 157116, oral: true },
   { title: "TARPLE: Target-Aware Semantic Prompt Learning for Few-Shot Object Detection in Remote Sensing", authors: "Madeline Anderson, Miriam Cha, Nathaniel Maidel, Bill Freeman, Sara Beery, J. Taylor Perron, Kerri Cahoy", id: 157117 },
   { title: "An Empirical Study on Learning Rooftop Solar Potential from Satellite Imagery Directly Without Explicit Geometry", authors: "Joshua Lee", id: 157118 },
   { title: "Beyond Benchmark Performance: Probing Environmental Signals in Geospatial SSL Representations", authors: "Rohita Mocharla", id: 157119 },
@@ -196,9 +196,9 @@ const acceptedPapers = [
   { title: "Land and Atmospheric Forecasting with a Pretrained JEPA-based Earth System Model", authors: "Matteo Salis, Sarah Ibrahimi, Marieke Wesselkamp, Mohamad Hakam Shams Eddin, Wael Almikaeel, Victor Hertel, Swapan Mallick, Ilaria Luise, Julian Kuehnert, Matthias Karlbauer, Sebastian Hickman, Sophie Xhonneux, Christian Lessig", id: 157123 },
   { title: "COSMOS-ReID: Benchmarking Open-World Cross-Sensor Object Re-Identification Across Satellite and UAV Imagery", authors: "Anna Khosrovyan, Hakob Tamazyan, Hrant Khachatryan", id: 157124 },
   { title: "Learning Coastlines as Geometric Curves with Vision-Language Models", authors: "Rafia Malik", id: 157125 },
-  { title: "Reducing the Uncertainty in Determining the Origin of Natural Commodities via Earth Embeddings", authors: "Sebastian Jimenez, Willem Waegeman, Victor Deklerck, Thomas Mortier", id: 157126 },
-  { title: "GeoChange: Predicting Socioeconomic Change from Earth Observation", authors: "Sumin Lee, Jungwon Kim, Jihee Kim, Meeyoung Cha", id: 157127 },
-  { title: "Shortcut Learning in Geospatial Foundation Model Embeddings for Cross-Disaster Damage Assessment", authors: "Ali Shibli, Andrea Nascetti, Yifang Ban", id: 157128 },
+  { title: "Reducing the Uncertainty in Determining the Origin of Natural Commodities via Earth Embeddings", authors: "Sebastian Jimenez, Willem Waegeman, Victor Deklerck, Thomas Mortier", id: 157126, oral: true },
+  { title: "GeoChange: Predicting Socioeconomic Change from Earth Observation", authors: "Sumin Lee, Jungwon Kim, Jihee Kim, Meeyoung Cha", id: 157127, oral: true },
+  { title: "Shortcut Learning in Geospatial Foundation Model Embeddings for Cross-Disaster Damage Assessment", authors: "Ali Shibli, Andrea Nascetti, Yifang Ban", id: 157128, oral: true },
   { title: "Detecting Weather Fronts from Satellite Observations: What Does Reanalysis Add?", authors: "Ioannis Dravilas, Miruna Stoicescu, Roope Tervo, Carlos Horn, Oriol Hinojo Comellas, Sina Montazeri, Andrea Meraner, Ana Lucic", id: 157129 },
 ];
 
@@ -555,7 +555,7 @@ const metadata = {
   </section>
 
   <!-- Accepted Papers -->
-  <section id="papers" class="scroll-mt-16 py-16 md:py-20">
+  <section id="papers" class="scroll-mt-16 pt-16 md:pt-20 pb-4">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="mb-10 md:mb-12 text-center">
         <p class="text-base text-secondary dark:text-blue-200 font-semibold tracking-wide uppercase">Program</p>
@@ -569,7 +569,7 @@ const metadata = {
       <!-- First 9 shown; the checkbox reveals the rest (CSS only) -->
       <div class="group">
         <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {acceptedPapers.map((p, i) => (
+          {acceptedPapers.toSorted((a, b) => Number(!!b.oral) - Number(!!a.oral)).map((p, i) => (
             <li class={i >= 9 ? 'hidden group-has-[:checked]:block' : ''}>
               <a
                 href={`https://neurips.cc/virtual/2026/${p.id}`}
@@ -577,6 +577,7 @@ const metadata = {
                 rel="noopener"
                 class="block h-full rounded-md bg-white dark:bg-slate-900 p-4 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-blue-300 transition-colors"
               >
+                {p.oral && <span class="inline-block mb-1.5 text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded bg-primary text-white">Oral</span>}
                 <p class="text-sm font-medium line-clamp-3">{p.title}</p>
                 <p class="text-xs text-muted mt-1 line-clamp-2">{p.authors}</p>
               </a>
