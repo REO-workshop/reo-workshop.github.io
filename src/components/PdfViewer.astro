@@ -1,0 +1,97 @@
+---
+// Modal PDF viewer for paper/poster links. Triggers are any elements with:
+//   data-pdf (unique key per paper), data-kind ('poster' | 'paper'), data-title,
+//   data-poster / data-paper (same-origin PDF URLs, /<repo>/<kind>s/<file>.pdf), data-links (JSON [[label, url], ...]).
+// On md+ screens a click opens the viewer; on phones the trigger's href (the PDF) opens in a new tab.
+// PDFs are served same-origin by each workshop repo's GitHub Pages project site, so they can be framed.
+import { Icon } from 'astro-icon/components';
+
+const btn = 'inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors';
+const nav = 'shrink-0 rounded-full bg-white/90 p-3 text-default shadow-lg hover:bg-white dark:bg-slate-800/90 dark:hover:bg-slate-700 transition-colors';
+const tab = 'rounded px-3 py-1 font-medium text-muted aria-pressed:bg-white aria-pressed:text-default aria-pressed:shadow-sm dark:aria-pressed:bg-slate-600';
+---
+
+<dialog id="pdf-viewer" class="group/v m-0 h-dvh w-screen max-h-none max-w-none bg-transparent p-0 backdrop:bg-slate-950/70 backdrop:backdrop-blur-sm">
+  <div data-backdrop class="flex h-full items-center justify-center gap-3 px-3">
+    <button type="button" data-nav="-1" aria-label="Previous paper" class={nav}><Icon name="tabler:chevron-left" class="w-6 h-6" /></button>
+    <div class="flex h-[94vh] min-w-0 max-w-[1280px] flex-1 flex-col overflow-hidden rounded-lg bg-white text-default shadow-2xl dark:bg-slate-900 group-data-[expanded]/v:h-[calc(100dvh-1.5rem)] group-data-[expanded]/v:max-w-none">
+      <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-700 px-3 py-2">
+        <p data-title class="flex-1 min-w-0 truncate px-1 font-medium"></p>
+        <div data-tabs class="flex rounded-md bg-slate-100 dark:bg-slate-800 p-0.5 text-sm">
+          <button type="button" data-tab="poster" class={tab}>Poster</button>
+          <button type="button" data-tab="paper" class={tab}>Paper</button>
+        </div>
+        <a data-download download class={btn}><Icon name="tabler:download" class="w-4 h-4" />Download</a>
+        <a data-github target="_blank" rel="noopener" class={btn}>File<Icon name="tabler:arrow-up-right" class="w-4 h-4 -ml-1" /></a>
+        <span data-links class="contents"></span>
+        <template data-link-tpl><a target="_blank" rel="noopener" class={btn}><span></span><Icon name="tabler:arrow-up-right" class="w-4 h-4 -ml-1" /></a></template>
+        <button type="button" data-wide aria-label="Toggle wide view" class={btn}>
+          <Icon name="tabler:arrows-maximize" class="w-5 h-5 group-data-[expanded]/v:hidden" />
+          <Icon name="tabler:arrows-minimize" class="w-5 h-5 hidden group-data-[expanded]/v:block" />
+        </button>
+        <form method="dialog"><button aria-label="Close" class={btn}><Icon name="tabler:x" class="w-5 h-5" /></button></form>
+      </div>
+      <iframe title="PDF viewer" class="w-full flex-1 bg-slate-100 dark:bg-slate-800"></iframe>
+    </div>
+    <button type="button" data-nav="1" aria-label="Next paper" class={nav}><Icon name="tabler:chevron-right" class="w-6 h-6" /></button>
+  </div>
+</dialog>
+
+<script>
+  // Delegated on document so it survives ClientRouter page swaps.
+  // One entry per paper, in page order (all triggers of a paper carry the same data).
+  const items = () => [...new Map([...document.querySelectorAll<HTMLElement>('[data-pdf]')].map((c) => [c.dataset.pdf!, c])).values()];
+  let cur = 0;
+  const show = (dlg: HTMLDialogElement, i: number, kind: string) => {
+    const list = items();
+    cur = (i + list.length) % list.length;
+    const d = list[cur].dataset;
+    const kinds = ['poster', 'paper'].filter((k) => d[k]);
+    if (!kinds.includes(kind)) kind = kinds[0];
+    const url = d[kind]!;
+    dlg.querySelector('iframe')!.src = `${url}#navpanes=0&pagemode=none`; // hide the reader's sidebar
+    dlg.querySelector<HTMLAnchorElement>('[data-download]')!.href = url;
+    dlg.querySelector<HTMLAnchorElement>('[data-github]')!.href = url.replace(/^\/([^/]+)\//, 'https://github.com/REO-workshop/$1/blob/main/');
+    dlg.querySelector('[data-title]')!.textContent = d.title!;
+    dlg.querySelector<HTMLElement>('[data-tabs]')!.hidden = kinds.length < 2;
+    dlg.querySelectorAll<HTMLElement>('[data-tab]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tab === kind)));
+    const tpl = dlg.querySelector<HTMLTemplateElement>('[data-link-tpl]')!;
+    dlg.querySelector('[data-links]')!.replaceChildren(
+      ...(JSON.parse(d.links ?? '[]') as [string, string][]).map(([label, href]) => {
+        const a = tpl.content.firstElementChild!.cloneNode(true) as HTMLAnchorElement;
+        a.href = href;
+        a.querySelector('span')!.textContent = label;
+        return a;
+      })
+    );
+    dlg.dataset.kind = kind;
+  };
+  document.addEventListener('click', (e) => {
+    const dlg = document.getElementById('pdf-viewer') as HTMLDialogElement | null;
+    if (!dlg) return;
+    const t = e.target as HTMLElement;
+    const chip = t.closest<HTMLElement>('[data-pdf]');
+    const el = t.closest<HTMLElement>('[data-tab], [data-nav], [data-wide]');
+    if (chip && matchMedia('(min-width: 768px)').matches) {
+      e.preventDefault();
+      show(dlg, items().findIndex((c) => c.dataset.pdf === chip.dataset.pdf), chip.dataset.kind!);
+      dlg.showModal();
+    } else if (el?.dataset.tab) show(dlg, cur, el.dataset.tab);
+    else if (el?.dataset.nav) show(dlg, cur + Number(el.dataset.nav), dlg.dataset.kind!);
+    else if (el?.hasAttribute('data-wide')) dlg.toggleAttribute('data-expanded');
+    else if (t === dlg || t.hasAttribute('data-backdrop')) dlg.close();
+  });
+  document.addEventListener('keydown', (e) => {
+    const dlg = document.getElementById('pdf-viewer') as HTMLDialogElement | null;
+    if (dlg?.open && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) show(dlg, cur + (e.key === 'ArrowLeft' ? -1 : 1), dlg.dataset.kind!);
+  });
+  // Free the PDF when closed
+  document.addEventListener(
+    'close',
+    (e) => {
+      const dlg = e.target as HTMLElement;
+      if (dlg.id === 'pdf-viewer') dlg.querySelector('iframe')!.src = 'about:blank';
+    },
+    true
+  );
+</script>
