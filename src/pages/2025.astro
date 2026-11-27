@@ -1,6 +1,9 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import Image from '~/components/common/Image.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import { Icon } from 'astro-icon/components';
+import PdfViewer from '~/components/PdfViewer.astro';
 
 import kazmierskiImg from '~/assets/images/speakers2025/kazmierski.jpg';
 import campsImg from '~/assets/images/speakers2025/camps.png';
@@ -8,6 +11,7 @@ import gottfriedsenImg from '~/assets/images/speakers2025/gottfriedsen.png';
 import lesauxImg from '~/assets/images/speakers2025/lesaux.png';
 import kariryaaImg from '~/assets/images/speakers2025/kariryaa.png';
 import ibmResearchLogo from '~/assets/images/logos/ibm_research.png';
+import copenhagenS2 from '~/assets/images/copenhagen_s2.jpg';
 
 const speakers2025 = [
   { name: 'Michal Kazmierski', affiliation: 'Google DeepMind', image: kazmierskiImg },
@@ -57,10 +61,14 @@ const programCommittee2025 = [
 ];
 
 const GH_BASE = 'https://github.com/REO-workshop/2025-EurIPS-REO-workshop/blob/main';
+// GitHub PDFs are shown in the PdfViewer, served by the repo's GitHub Pages site under this domain.
+// Local dev: symlink public/2025-EurIPS-REO-workshop -> the local clone (ignored via .git/info/exclude).
+const local = (url?: string) => (url?.startsWith(GH_BASE) ? url.replace(GH_BASE, '/2025-EurIPS-REO-workshop') : undefined);
 
 const acceptedPapers = [
   {
     id: 1,
+    highlight: true,
     title: 'A decade of sea ice concentration retrieved from Sentinel-1',
     authors: 'Wulf et al.',
     paper: 'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5222853',
@@ -123,6 +131,7 @@ const acceptedPapers = [
   },
   {
     id: 10,
+    highlight: true,
     title: 'GOMAA-Geo: Goal Modality Agnostic Active Geo-localization',
     authors: 'Sarkar et al.',
     paper: 'https://papers.nips.cc/paper_files/paper/2024/file/bd8b52c2fefdb37e3b3953a37408e9dc-Paper-Conference.pdf',
@@ -216,6 +225,7 @@ const acceptedPapers = [
   },
   {
     id: 24,
+    highlight: true,
     title: 'Scalable Geospatial Data Generation Using AlphaEarth Foundations',
     authors: 'Houriez et al.',
     paper: 'https://www.climatechange.ai/papers/neurips2025/56',
@@ -223,6 +233,7 @@ const acceptedPapers = [
   },
   {
     id: 25,
+    highlight: true,
     title: 'SenForFlood: A Global Dataset for Flood Mapping',
     authors: 'Matosak et al.',
     paper: 'https://isprs-archives.copernicus.org/articles/XLVIII-M-7-2025/97/2025/',
@@ -263,12 +274,14 @@ const acceptedPapers = [
   },
   {
     id: 31,
+    highlight: true,
     title: 'MoTiF: a self-supervised model for multi-source forecasting with application to tropical cyclones',
     authors: '',
     paper: 'https://www.cambridge.org/core/journals/environmental-data-science/article/motif-a-selfsupervised-model-for-multisource-forecasting-with-application-to-tropical-cyclones/489085C5B41E673D1480273C2F55D01C',
   },
   {
     id: 32,
+    highlight: true,
     title: 'Open-Canopy: Towards Very High Resolution Forest Monitoring',
     authors: 'Fogel et al. (CVPR 2025)',
     paper: 'https://openaccess.thecvf.com/content/CVPR2025/html/Fogel_Open-Canopy_Towards_Very_High_Resolution_Forest_Monitoring_CVPR_2025_paper.html',
@@ -312,26 +325,56 @@ const metadata = {
     </header>
   </Fragment>
 
-  <!-- Header -->
-  <section class="relative pt-10 md:pt-14 pb-12 md:pb-16 bg-blue-50 dark:bg-transparent">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-      <p class="text-base text-secondary dark:text-blue-200 font-semibold tracking-wide uppercase">2025 edition · Archive</p>
-      <h1 class="text-4xl md:text-5xl font-bold leading-tight tracking-tighter mt-3 mb-4">
-        1st Workshop on Advances in <span class="text-primary">Representation Learning for Earth Observation</span>
-      </h1>
-      <p class="text-lg md:text-xl text-muted max-w-3xl mx-auto">
-        EurIPS 2025 · December 7, 2025 · University of Copenhagen, Denmark
-      </p>
-      <div class="mt-6 flex flex-wrap justify-center gap-4 text-sm">
-        <a href="https://github.com/REO-workshop/2025-EurIPS-REO-workshop" target="_blank" rel="noopener" class="text-primary underline">Papers & posters on GitHub ↗</a>
-        <a href="https://www.youtube.com/@advances-REO-workshop" target="_blank" rel="noopener" class="text-primary underline">Keynote recordings on YouTube ↗</a>
-      </div>
-    </div>
-  </section>
+  <!-- The custom sticky header is opaque, so offset the Hero's pull-up under the header -->
+  <div class="md:pt-[76px]">
+    <Hero
+      tagline='<span class="text-blue-300 dark:text-blue-300">EurIPS 2025 · Copenhagen, Denmark · Sunday, Dec 7</span>'
+      actions={[
+        { variant: 'primary', text: 'Accepted Papers', href: '#papers' },
+        {
+          variant: 'secondary',
+          text: 'Keynotes',
+          href: '#speakers',
+          class: '!bg-slate-200 hover:!bg-slate-300 !text-slate-900 !border-slate-200 hover:!border-slate-300 dark:!bg-slate-200 dark:hover:!bg-slate-300 dark:!text-slate-900 dark:!border-slate-200',
+        },
+      ]}
+    >
+      <Fragment slot="bg">
+        <div class="absolute inset-0 overflow-hidden">
+          <Image
+            src={copenhagenS2}
+            alt="Sentinel-2 satellite image of Copenhagen"
+            width={2400}
+            height={1200}
+            widths={[800, 1600, 2400]}
+            sizes="100vw"
+            loading="eager"
+            fetchpriority="high"
+            layout="cover"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-b from-slate-900/75 via-slate-900/60 to-slate-900/85 dark:from-slate-950/85 dark:via-slate-950/70 dark:to-slate-950/90"></div>
+        </div>
+        <p class="absolute bottom-2 right-3 text-[10px] text-white/70 z-10">
+          Sentinel-2 image of Copenhagen – Credit: ESA, European Union
+        </p>
+      </Fragment>
+
+      <Fragment slot="title">
+        <span class="text-white drop-shadow-lg">1st Workshop on Advances in <span class="text-blue-300">Representation Learning for Earth Observation</span></span>
+      </Fragment>
+
+      <Fragment slot="subtitle">
+        <span class="text-slate-100">
+          Held on December 7, 2025 at the University of Copenhagen, as part of EurIPS 2025.
+        </span>
+      </Fragment>
+    </Hero>
+  </div>
 
   <!-- Stats -->
-  <section class="py-12 md:py-16">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <section class="pt-16 md:pt-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div class="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-6 text-center">
           <div class="text-4xl font-bold text-primary">117</div>
@@ -350,10 +393,10 @@ const metadata = {
   </section>
 
   <!-- About -->
-  <section class="py-12 md:py-16">
+  <section id="about" class="scroll-mt-16 py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <p class="text-base text-secondary dark:text-blue-200 font-semibold tracking-wide uppercase">About REO-1</p>
-      <h2 class="text-3xl md:text-4xl font-bold leading-tight tracking-tighter mt-2 mb-6">
+      <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tighter mt-2 mb-6">
         Uniting ML, computer vision, and Earth sciences
       </h2>
       <div class="space-y-4 text-lg text-muted">
@@ -386,78 +429,83 @@ const metadata = {
   </section>
 
   <!-- Call for Papers -->
-  <section class="py-12 md:py-16 bg-blue-50 dark:bg-transparent">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+  <section id="call-for-papers" class="scroll-mt-16 bg-blue-50 dark:bg-transparent">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-16 md:pt-20 mb-10 md:mb-12 text-center">
       <p class="text-base text-secondary dark:text-blue-200 font-semibold tracking-wide uppercase">Call for Papers</p>
-      <h2 class="text-3xl md:text-4xl font-bold leading-tight tracking-tighter mt-2 mb-6">
-        Two submission tracks
-      </h2>
+      <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tighter mt-2">Two submission tracks</h2>
+    </div>
 
-      <div class="grid md:grid-cols-2 gap-6 mb-8">
+    <!-- Tracks + dates -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
+      <div class="grid md:grid-cols-2 gap-6">
         <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-6 bg-white dark:bg-slate-900">
-          <h3 class="text-xl font-bold mb-2">Track 1 — Novel unpublished work</h3>
+          <h3 class="text-xl font-bold mb-2">Research Track</h3>
           <p class="text-muted">
-            Up to <strong>4 pages single column</strong> (excluding references) using the NeurIPS
-            template. Short supplementary material allowed.
+            Novel unpublished work of up to <strong>4 pages single column</strong> (excluding
+            references) using the NeurIPS template. Short supplementary material allowed.
             <strong>Double-blind</strong>, non-archival.
           </p>
         </div>
         <div class="rounded-lg border border-slate-200 dark:border-slate-700 p-6 bg-white dark:bg-slate-900">
-          <h3 class="text-xl font-bold mb-2">Track 2 — Recently published work</h3>
+          <h3 class="text-xl font-bold mb-2">Highlights Track</h3>
           <p class="text-muted">
-            Papers published after NeurIPS 2024 could be submitted as-is.
+            Recently published work: papers published after NeurIPS 2024 could be submitted as-is.
             <strong>Single-blind</strong> (anonymous reviewers only).
           </p>
         </div>
       </div>
-
-      <p class="text-muted mb-6">
+      <p class="text-sm text-muted mt-4">
         Accepted contributions were presented as posters; authors could indicate interest in a
         10-minute oral talk.
       </p>
-      <p class="text-sm text-muted mt-4">
-        The Microsoft CMT service was used for managing the peer-reviewing process for this conference. This service was provided for free by Microsoft and they bore all expenses, including costs for Azure cloud services as well as for software development and support.          
-      </p>
-      <br>
-      <h3 class="text-xl font-bold mb-3">Timeline</h3>
-      <div class="overflow-x-auto mb-8">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="border-b border-slate-200 dark:border-slate-700">
-              <th class="py-3 pr-4 font-semibold">Milestone</th>
-              <th class="py-3 font-semibold">Date (AoE)</th>
-            </tr>
-          </thead>
-          <tbody class="text-muted">
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-3 pr-4">Submission deadline</td>
-              <td class="py-3">Oct 15 → extended to Oct 20, 2025</td>
-            </tr>
-            <tr class="border-b border-slate-100 dark:border-slate-800">
-              <td class="py-3 pr-4">Notification of acceptance</td>
-              <td class="py-3">Oct 31, 2025</td>
-            </tr>
-            <tr>
-              <td class="py-3 pr-4">Camera-ready</td>
-              <td class="py-3">Nov 28, 2025</td>
-            </tr>
-          </tbody>
-        </table>
+
+      <div class="mt-10">
+        <h3 class="text-2xl font-bold mb-4">Important Dates</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-200 dark:border-slate-700">
+                <th class="py-3 pr-4 font-semibold">Milestone</th>
+                <th class="py-3 font-semibold">Date (AoE)</th>
+              </tr>
+            </thead>
+            <tbody class="text-muted">
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-3 pr-4">Submission deadline</td><td class="py-3">Oct 15 → extended to Oct 20, 2025</td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-3 pr-4">Notification of acceptance</td><td class="py-3">Oct 31, 2025</td>
+              </tr>
+              <tr class="border-b border-slate-100 dark:border-slate-800">
+                <td class="py-3 pr-4">Camera-ready</td><td class="py-3">Nov 28, 2025</td>
+              </tr>
+              <tr>
+                <td class="py-3 pr-4">Workshop day</td><td class="py-3">Dec 7, 2025 — University of Copenhagen, South Campus</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <h3 class="text-xl font-bold mb-3">Topics of Interest</h3>
-      <ul class="space-y-2 text-muted">
-        {topics2025.map((t) => <li>· {t}</li>)}
-      </ul>
+      <div class="mt-10">
+        <h3 class="text-2xl font-bold mb-4">Topics of Interest</h3>
+        <ul class="space-y-2 text-muted">
+          {topics2025.map((t) => <li>· {t}</li>)}
+        </ul>
+      </div>
     </div>
   </section>
 
   <!-- Invited Speakers -->
-  <section class="py-12 md:py-16">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="mb-8 md:mb-10 text-center">
+  <section id="speakers" class="scroll-mt-16 py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="mb-10 md:mb-12 text-center">
         <p class="text-base text-secondary dark:text-blue-200 font-semibold tracking-wide uppercase">Invited Speakers</p>
-        <h2 class="text-3xl md:text-4xl font-bold leading-tight tracking-tighter mt-2">Keynotes</h2>
+        <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tighter mt-2">Keynotes</h2>
+        <p class="max-w-3xl mx-auto mt-4 text-xl text-muted">
+          All keynotes were recorded. Watch them on the
+          <a href="https://www.youtube.com/@advances-REO-workshop" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-primary underline">workshop YouTube channel<Icon name="tabler:arrow-up-right" class="w-5 h-5" /></a>
+        </p>
       </div>
 
       <!-- Speakers: centered, auto-wrapping (3 / 2 / 1 per row by breakpoint) -->
@@ -484,78 +532,88 @@ const metadata = {
         ))}
       </div>
 
-      <p class="text-sm text-muted text-center mt-8">
-        Recordings available on the
-        <a href="https://www.youtube.com/@advances-REO-workshop" target="_blank" rel="noopener" class="text-primary underline">workshop YouTube channel</a>.
-      </p>
     </div>
   </section>
 
-  <!-- Accepted Papers -->
-  <section class="py-12 md:py-16 bg-blue-50 dark:bg-transparent">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="mb-8 md:mb-10">
+  <!-- Accepted Papers (same card grid as 2026) -->
+  <section id="papers" class="scroll-mt-16 py-16 md:py-20 bg-blue-50 dark:bg-transparent">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="mb-10 md:mb-12 text-center">
         <p class="text-base text-secondary dark:text-blue-200 font-semibold tracking-wide uppercase">Program</p>
-        <h2 class="text-3xl md:text-4xl font-bold leading-tight tracking-tighter mt-2">Accepted Papers</h2>
-        <p class="text-muted mt-3">
-          33 papers were presented at the workshop (26 novel works, 7 recent works, 5 as orals).
+        <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tighter mt-2">Accepted Papers</h2>
+        <p class="max-w-3xl mx-auto mt-4 text-xl text-muted">
+          33 papers were presented at the workshop, 5 of them as orals.
+        </p>
+      </div>
+
+      <!-- First 9 shown; the checkbox reveals the rest (CSS only) -->
+      <div class="group">
+        <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {acceptedPapers.map((p, i) => {
+            const poster = local(p.poster);
+            const paper = local(p.paper);
+            const links = [p.paper && !paper && ['Paper', p.paper], p.video && ['Video', p.video]].filter((l): l is string[] => !!l);
+            // Opens the PdfViewer (md+); falls back to the PDF in a new tab
+            const view = (kind: string) => ({
+              href: kind === 'poster' ? poster : paper, target: '_blank', 'data-pdf': p.id, 'data-kind': kind, 'data-title': p.title,
+              'data-poster': poster, 'data-paper': paper, 'data-links': JSON.stringify(links),
+            });
+            return (
+            <li class={i >= 9 ? 'hidden group-has-[:checked]:block' : ''}>
+              <!-- Title link is stretched over the card (opens the poster, else the paper); chips sit above it -->
+              <div class="relative h-full rounded-md bg-white dark:bg-slate-900 p-4 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-blue-300 transition-colors">
+                <div class="flex flex-wrap items-center gap-1 mb-1.5 text-[10px] font-semibold uppercase tracking-wide">
+                  <span class="font-mono text-xs text-primary dark:text-blue-300 mr-0.5">#{p.id}</span>
+                  {p.highlight && <span class="px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200">Highlights Track</span>}
+                  {poster && <a {...view('poster')} class="relative z-10 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded transition-colors bg-blue-200 text-blue-900 hover:bg-blue-300 dark:bg-blue-800/70 dark:text-blue-100 dark:hover:bg-blue-700">Poster</a>}
+                  {paper && <a {...view('paper')} class="relative z-10 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded transition-colors bg-sky-100 text-sky-800 hover:bg-sky-200 dark:bg-sky-900/60 dark:text-sky-200 dark:hover:bg-sky-800">Paper</a>}
+                  {links.map(([label, href]) => (
+                    <a href={href} target="_blank" rel="noopener" class={`relative z-10 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded transition-colors ${label === 'Video' ? 'bg-slate-200 text-slate-700 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600' : 'bg-sky-100 text-sky-800 hover:bg-sky-200 dark:bg-sky-900/60 dark:text-sky-200 dark:hover:bg-sky-800'}`}>{label}<Icon name="tabler:arrow-up-right" class="w-3 h-3" /></a>
+                  ))}
+                </div>
+                <a {...(poster || paper ? view(poster ? 'poster' : 'paper') : { href: p.paper, target: '_blank', rel: 'noopener' })} class="block text-sm font-medium line-clamp-3 after:absolute after:inset-0">{p.title}</a>
+                {p.authors && <p class="text-xs text-muted mt-1 line-clamp-2">{p.authors}</p>}
+              </div>
+            </li>
+            );
+          })}
+        </ul>
+        <div class="mt-8 flex justify-center">
+          <input type="checkbox" id="show-all-papers" class="peer sr-only" />
+          <label for="show-all-papers" class="btn-primary cursor-pointer peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2">
+            <span class="group-has-[:checked]:hidden">Show all {acceptedPapers.length} papers</span>
+            <span class="hidden group-has-[:checked]:inline">Show fewer</span>
+          </label>
+        </div>
+        <p class="mt-4 text-center text-sm text-muted">
           Papers, posters, and videos are archived on
           <a href="https://github.com/REO-workshop/2025-EurIPS-REO-workshop" target="_blank" rel="noopener" class="text-primary underline">GitHub</a>.
         </p>
       </div>
+      <PdfViewer />
+    </div>
+  </section>
 
-      <ul class="space-y-2">
-        {acceptedPapers.map((p) => (
-          <li class="flex items-start gap-4 rounded-md bg-white dark:bg-slate-900 p-4 border border-slate-200 dark:border-slate-700">
-            <span class="font-mono text-sm text-primary dark:text-blue-300 whitespace-nowrap pt-0.5 min-w-[2.5rem]">#{p.id}</span>
-            <div class="flex-1">
-              <p class="text-base font-medium">{p.title}</p>
-              {p.authors && <p class="text-sm text-muted mt-0.5">{p.authors}</p>}
-              <div class="flex flex-wrap gap-2 mt-2">
-                {p.paper && (
-                  <a
-                    href={p.paper}
-                    target="_blank"
-                    rel="noopener"
-                    class="text-xs px-2 py-1 rounded bg-blue-50 hover:bg-blue-100 text-primary dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-blue-300 border border-blue-100 dark:border-slate-700"
-                  >
-                    Paper
-                  </a>
-                )}
-                {p.poster && (
-                  <a
-                    href={p.poster}
-                    target="_blank"
-                    rel="noopener"
-                    class="text-xs px-2 py-1 rounded bg-blue-50 hover:bg-blue-100 text-primary dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-blue-300 border border-blue-100 dark:border-slate-700"
-                  >
-                    Poster
-                  </a>
-                )}
-                {p.video && (
-                  <a
-                    href={p.video}
-                    target="_blank"
-                    rel="noopener"
-                    class="text-xs px-2 py-1 rounded bg-blue-50 hover:bg-blue-100 text-primary dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-blue-300 border border-blue-100 dark:border-slate-700"
-                  >
-                    Video
-                  </a>
-                )}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+  <!-- Sponsors -->
+  <section id="sponsors" class="scroll-mt-16 py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="mb-10 md:mb-12 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tighter">Sponsors</h2>
+      </div>
+
+      <div class="flex justify-center">
+        <a href="https://research.ibm.com/" target="_blank" rel="noopener noreferrer" class="flex w-full max-w-md items-center justify-center rounded-lg border border-blue-200 bg-white p-8 dark:border-blue-300 dark:bg-white">
+          <img src={ibmResearchLogo.src} alt="IBM Research" class="h-12 w-auto" />
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Organizers -->
-  <section class="py-12 md:py-16">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="mb-8 md:mb-10 text-center">
-        <p class="text-base text-secondary dark:text-blue-200 font-semibold tracking-wide uppercase">Team</p>
-        <h2 class="text-3xl md:text-4xl font-bold leading-tight tracking-tighter mt-2">Organizers</h2>
+  <section id="organizers" class="scroll-mt-16 py-16 md:py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="mb-10 md:mb-12 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold leading-tight tracking-tighter mt-2">Organizers</h2>
       </div>
 
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -582,26 +640,16 @@ const metadata = {
           </ul>
         </details>
       </div>
-    </div>
-  </section>
-
-  <!-- Sponsors -->
-  <section class="py-12 md:py-16">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="mb-8 md:mb-10 text-center">
-        <h2 class="text-3xl md:text-4xl font-bold leading-tight tracking-tighter mt-2">Sponsors</h2>
-      </div>
-
-      <div class="flex flex-wrap items-center justify-center gap-8">
-        <img src={ibmResearchLogo.src} alt="IBM Research" class="h-12 w-auto" />
-      </div>
+      <p class="text-sm text-muted mt-10">
+        The Microsoft CMT service was used for managing the peer-reviewing process for this conference. This service was provided for free by Microsoft and they bore all expenses, including costs for Azure cloud services as well as for software development and support.
+      </p>
     </div>
   </section>
 
   <!-- Contact -->
-  <section class="py-12 md:py-16">
+  <section class="py-16 md:py-20">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <h3 class="text-2xl font-bold mb-3">Contact</h3>
+      <h3 class="text-2xl font-bold mb-2">Contact</h3>
       <p class="text-muted">
         For questions about the workshop, reach out to
         <a href="mailto:reo-workshop@googlegroups.com" class="text-primary underline">reo-workshop@googlegroups.com</a>.
@@ -619,7 +667,7 @@ const metadata = {
         Continuing at NeurIPS 2026
       </h2>
       <p class="text-lg text-muted mb-6">
-        The second edition takes place in Paris, France · Dec 12 / 13, 2026.
+        The second edition takes place in Paris, France · Saturday, Dec 12, 2026.
       </p>
       <a href="/" class="btn-primary py-3 px-8 font-semibold">Visit REO 2026 →</a>
     </div>
